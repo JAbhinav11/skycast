@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Weather — Clean</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Greeting Area -->
+<div class="top-bar">
+    <h2 id="greeting" class="greeting"></h2>
+    <button id="settingsBtn" class="settings-btn">⚙️</button>
+</div>
+
+<!-- Settings Button -->
+
+<!-- Settings Modal -->
+<div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+        <span id="closeSettings" class="close">&times;</span>
+        <h2>Settings</h2>
+
+        <label for="userName">Your Name:</label>
+        <input
+                type="text"
+                id="userName"
+                placeholder="Enter your name"
+                maxlength="11"
+                pattern="[A-Za-z]{1,11}"
+                title="Only alphabets allowed (max 12 characters)"
+                oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')"
+        />
+
+        <div class="theme-toggle">
+            <label for="modeSwitch">Switch Theme:</label>
+            <div class="mode-toggle">
+                <input type="checkbox" id="modeSwitch" aria-label="Toggle dark mode">
+                <label for="modeSwitch" class="toggle"></label>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button id="saveSettings">Save</button>
+            <button id="cancelSettings">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <section class="controls">
+        <div class="search-group">
+            <div class="input-wrap">
+                <input autofocus id="cityInput" type="text" placeholder="Search city…" autocomplete="off" aria-label="Search city" />
+                <ul id="suggestions" class="suggestions" role="listbox" aria-label="City suggestions"></ul>
+            </div>
+            <button id="useLocationBtn" class="btn btn-primary" aria-label="Use current location">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38
+             0-2.5-1.12-2.5-2.5s1.12-2.5
+             2.5-2.5 2.5 1.12 2.5 2.5-1.12
+             2.5-2.5 2.5z"/>
+                </svg>
+            </button>
+        </div>
+        <p class="hint">Tip: start typing to get city suggestions.</p>
+    </section>
+
+    <main class="content">
+        <section class="current card" id="currentCard" aria-live="polite">
+            <div class="current-header">
+                <div class="place">
+                    <h2 id="placeName">Bengaluru, IN</h2>
+                    <p id="updatedAt" class="subtle">Updated just now</p>
+                </div>
+                <div class="weather-main">
+                    <img id="currentIcon" alt="" />
+                    <div class="temp-now" id="tempNow">—</div>
+                </div>
+            </div>
+
+            <p class="weather-desc" id="weatherDesc">Clear sky</p>
+
+            <div class="current-stats">
+                <div class="stat"><span class="label">Feels like</span><span class="value" id="feelsLike">—</span></div>
+                <div class="stat"><span class="label">Humidity</span><span class="value" id="humidity">—</span></div>
+                <div class="stat"><span class="label">Wind</span><span class="value" id="wind">—</span></div>
+                <div class="stat"><span class="label">Pressure</span><span class="value" id="pressure">—</span></div>
+                <div class="stat"><span class="label">UV Index</span><span class="value" id="uvi">—</span></div>
+                <div class="stat"><span class="label">Visibility</span><span class="value" id="visibility">—</span></div>
+            </div>
+        </section>
+
+        <section class="forecast card" id="forecastCard">
+            <h3>5-Day Forecast</h3>
+            <div id="forecastGrid" class="forecast-grid" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="footer subtle">
+        Data by OpenWeather • <button id="toggleUnits" class="btn btn-link"></button>
+    </footer>
+</div>
+
+<script>
+    // Inject your OpenWeather API key safely at build-time in real apps.
+    window.OPENWEATHER_API_KEY = "015df15228fe7e9cd4a17b8d94f64fff";
+</script>
+<script src="script.js" defer></script>
+</body>
+</html>
