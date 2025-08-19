@@ -2,21 +2,48 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Weather — Clean</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="google-site-verification" content="Nyl0CBSnMsGhr4ldgSKgvZyrvrkp0YttjiY7q5uJD6Y" />
+
+    <!-- Primary Meta Tags -->
+    <title>SkyCast — Clean & Modern Weather App</title>
+    <meta name="title" content="SkyCast — Clean & Modern Weather App" />
+    <meta name="description" content="SkyCast is a modern weather app with real-time forecasts, geolocation, theming, and offline caching. Stay updated with accurate, personalized weather updates anywhere in the world." />
+    <meta name="keywords" content="weather, forecast, skycast, weather app, weather widget, live weather, temperature, forecast app, geolocation weather" />
+    <meta name="author" content="Abhinav Jaiswal" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://JAbhinav11.github.io/skycast" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://JAbhinav11.github.io/skycast/" />
+    <meta property="og:title" content="SkyCast — Clean & Modern Weather App" />
+    <meta property="og:description" content="Real-time weather forecasts, location search, offline caching, and a clean light/dark themed UI." />
+    <meta property="og:image" content="https://JAbhinav11.github.io/skycast/assets/images/preview.jpg" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://JAbhinav11.github.io/skycast/" />
+    <meta property="twitter:title" content="SkyCast — Clean & Modern Weather App" />
+    <meta property="twitter:description" content="Real-time weather forecasts, location search, offline caching, and a clean light/dark themed UI." />
+    <meta property="twitter:image" content="https://JAbhinav11.github.io/skycast/assets/images/preview.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Greeting Area -->
 <div class="top-bar">
     <h2 id="greeting" class="greeting"></h2>
     <button id="settingsBtn" class="settings-btn">⚙️</button>
 </div>
-
-<!-- Settings Button -->
 
 <!-- Settings Modal -->
 <div id="settingsModal" class="modal hidden">
@@ -26,12 +53,11 @@
 
         <label for="userName">Your Name:</label>
         <input
-                type="text"
-                id="userName"
+                type="text" id="userName"
                 placeholder="Enter your name"
                 maxlength="11"
                 pattern="[A-Za-z]{1,11}"
-                title="Only alphabets allowed (max 12 characters)"
+                title="Only alphabets allowed (max 11 characters)"
                 oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')"
         />
 
@@ -55,7 +81,7 @@
     <section class="controls">
         <div class="search-group">
             <div class="input-wrap">
-                <input autofocus id="cityInput" type="text" placeholder="Search city…" autocomplete="off" aria-label="Search city" />
+                <input id="cityInput" type="text" placeholder="Search city…" autocomplete="off" aria-label="Search city" />
                 <ul id="suggestions" class="suggestions" role="listbox" aria-label="City suggestions"></ul>
             </div>
             <button id="useLocationBtn" class="btn btn-primary" aria-label="Use current location">
@@ -96,20 +122,17 @@
         </section>
 
         <section class="forecast card" id="forecastCard">
-            <h3>5-Day Forecast</h3>
+            <h3>Weather Forecast</h3>
             <div id="forecastGrid" class="forecast-grid" aria-live="polite"></div>
         </section>
     </main>
 
     <footer class="footer subtle">
-        Data by OpenWeather • <button id="toggleUnits" class="btn btn-link"></button>
+        Data by WeatherAPI • <button id="toggleUnits" class="btn btn-link"></button>
     </footer>
 </div>
 
-<script>
-    // Inject your OpenWeather API key safely at build-time in real apps.
-    window.OPENWEATHER_API_KEY = "015df15228fe7e9cd4a17b8d94f64fff";
-</script>
-<script src="script.js" defer></script>
+<div id="toast-container" class="toast-container"></div>
+<script src="assets/js/script.js" defer></script>
 </body>
 </html>

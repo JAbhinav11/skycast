@@ -73,10 +73,10 @@ body::-webkit-scrollbar {
 .container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 18px;
+  padding: 30px 10px;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
-  gap: 18px;
+  gap: 20px;
   min-height: 100dvh;
 }
 
@@ -219,7 +219,8 @@ body::-webkit-scrollbar {
 .content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
+    margin-top: 30px;
 }
 
 .card {
@@ -260,7 +261,7 @@ body::-webkit-scrollbar {
 .weather-main img {
   width: 65px;
   height: 65px;
-  filter: drop-shadow(1px 0px 1px var(--shadow-color));
+  filter: drop-shadow(3px 3px 3px var(--shadow-color));
 }
 
 .weather-desc {
@@ -322,7 +323,7 @@ body::-webkit-scrollbar {
   gap: 6px;
 }
 .day .d { font-weight: 700; }
-.day img { width: 48px; height: 48px; margin: 0 auto; filter: drop-shadow(1px 0px 1px var(--shadow-color)); }
+.day img { width: 48px; height: 48px; margin: 0 auto; filter: drop-shadow(3px 3px 3px var(--shadow-color)); }
 .day .hi { font-weight: 800; }
 .day .lo { color: var(--muted); }
 
@@ -333,16 +334,15 @@ body::-webkit-scrollbar {
 }
 
 .settings-btn {
-  background: var(--bg-card);
-  color: var(--text);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: var(--shadow-outer);
-  position: relative;
-  top: 0;
-  right: 0;
+    color: var(--text);
+    border: none;
+    font-size: 21px;
+    cursor: pointer;
+    background: none;
+    filter: drop-shadow(1px 1px 2px var(--shadow-color));
+    position: relative;
+    top: 0;
+    right: 0;
 }
 
 .modal {
@@ -353,7 +353,7 @@ body::-webkit-scrollbar {
   inset: 0;
   background: rgba(0,0,0,0.6); /* dark overlay */
   backdrop-filter: blur(4px);  /* subtle blur */
-  z-index: 1000;
+  z-index: 2000;
 }
 
 .modal.hidden {
@@ -416,6 +416,33 @@ body::-webkit-scrollbar {
   font-size: 22px;
   cursor: pointer;
 }
+
+.toast-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+}
+
+.toast {
+  background: var(--card-bg, #333);
+  color: var(--text-color, #fff);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 /* Responsive */
 @media (max-width: 900px) {
