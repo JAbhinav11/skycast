@@ -442,12 +442,45 @@ body::-webkit-scrollbar {
   transform: translateY(0);
 }
 
+/* Astronomy section */
+.astro {
+  margin-top: 20px;
+  display: grid;
+  font-size: 15px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.astro-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: var(--shadow-inner);
+  text-align: center;
+}
+
+.astro-item .label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.astro-item .value {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 4px;
+  color: var(--text);
+}
 
 /* Responsive */
 @media (max-width: 900px) {
   .forecast-grid { grid-template-columns: repeat(3, 1fr) }
   .current-stats { grid-template-columns: repeat(2, 1fr); }
   .greeting { font-size: 25px; }
+  .astro { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 600px) {
   .forecast-grid { grid-template-columns: repeat(2, 1fr); }

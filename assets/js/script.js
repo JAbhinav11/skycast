@@ -21,6 +21,12 @@ const weatherDesc = document.getElementById("weatherDesc");
 const forecastGrid = document.getElementById("forecastGrid");
 const toggleUnitsBtn = document.getElementById("toggleUnits");
 const modeSwitch = document.getElementById("modeSwitch");
+const sunriseEl = document.getElementById("sunrise");
+const sunsetEl = document.getElementById("sunset");
+const moonriseEl = document.getElementById("moonrise");
+const moonsetEl = document.getElementById("moonset");
+const moonPhaseEl = document.getElementById("moonPhase");
+
 
 /* STATE */
 let units = (localStorage.getItem("units") || "metric"); // 'metric' | 'imperial'
@@ -101,6 +107,8 @@ async function fetchWeather(lat, lon) {
   if (!res.ok) throw new Error("Weather fetch failed");
   const data = await res.json();
 
+  const todayAstro = data.forecast.forecastday[0].astro;
+
   const weatherData = {
     _source: "weatherapi",
     lat, lon,
@@ -131,7 +139,13 @@ async function fetchWeather(lat, lon) {
       pressure: d.hour[12]?.pressure_mb ?? null,
       wind: { kph: d.day.maxwind_kph, mph: d.day.maxwind_mph },
       weather: [{ description: d.day.condition.text, icon: mapIcon(d.day.condition.icon) }]
-    }))
+    })),
+    astro: {
+      sunrise: todayAstro.sunrise,
+      sunset: todayAstro.sunset,
+      moonrise: todayAstro.moonrise,
+      moonset: todayAstro.moonset,
+    }
   };
 
   setCached(key, weatherData, 10 * 60 * 1000);
@@ -168,6 +182,14 @@ function renderCurrent(data, place) {
   uvi.textContent = data.current.uvi != null ? `${Math.round(data.current.uvi)}` : "—";
   visibility.textContent = fmtVisibility(data.current.visibility);
   weatherDesc.textContent = desc ? desc.charAt(0).toUpperCase() + desc.slice(1) : "—";
+
+  // Astronomy info
+  if (data.astro) {
+    sunriseEl.textContent = data.astro.sunrise || "—";
+    sunsetEl.textContent = data.astro.sunset || "—";
+    moonriseEl.textContent = data.astro.moonrise || "—";
+    moonsetEl.textContent = data.astro.moonset || "—";
+  }
 }
 
 function renderForecast(data) {
