@@ -77,7 +77,6 @@ body::-webkit-scrollbar {
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   gap: 20px;
-  min-height: 100dvh;
 }
 
 .topbar {

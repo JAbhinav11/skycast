@@ -292,7 +292,7 @@ modeSwitch.addEventListener("change", () => {
 });
 
 /* Init */
-(function init() {
+(async function init() {
   document.documentElement.setAttribute("data-theme", theme);
   modeSwitch.checked = theme === "dark";
   toggleUnitsBtn.textContent = units === "metric" ? "Switch to °F" : "Switch to °C";
@@ -301,10 +301,40 @@ modeSwitch.addEventListener("change", () => {
     setPlaceTitle(last);
     loadByCoords(last.lat, last.lon, last);
   } else {
-    setPlaceTitle(DEFAULT_CITY);
-    loadByCoords(DEFAULT_CITY.lat, DEFAULT_CITY.lon, DEFAULT_CITY);
+   // Try IP-based city detection first
+   const ipCity = await getCityByIP();
+   if (ipCity) {
+     setPlaceTitle(ipCity);
+     loadByCoords(ipCity.lat, ipCity.lon, ipCity);
+     localStorage.setItem("lastPlace", JSON.stringify(ipCity));
+     showToast(`Using detected location: ${ipCity.name}, ${ipCity.state}, ${ipCity.country}`);
+   } else {
+      // fallback to default city
+      setPlaceTitle(DEFAULT_CITY);
+      loadByCoords(DEFAULT_CITY.lat, DEFAULT_CITY.lon, DEFAULT_CITY);
+    }
   }
 })();
+
+async function getCityByIP() {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    if (!res.ok) throw new Error("IP fetch failed");
+    const data = await res.json();
+    if (data.city && data.latitude && data.longitude) {
+      return {
+        name: data.city,
+        state: data.region || "",
+        country: data.country || "",
+        lat: data.latitude,
+        lon: data.longitude
+      };
+    }
+  } catch (err) {
+    console.warn("IP location failed:", err);
+  }
+  return null; // fallback
+}
 
 /* DOM: Settings & Greeting */
 const settingsBtn = document.getElementById("settingsBtn");
@@ -318,7 +348,7 @@ const greetingEl = document.getElementById("greeting");
 function getGreeting(name) {
   const hour = new Date().getHours();
   let greet = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-  return name ? `${greet}, ${name}!` : greet;
+  return name ? `${greet}, ${name}!` : `${greet}!`;
 }
 function showGreeting() {
   const storedName = localStorage.getItem("userName") || "";
